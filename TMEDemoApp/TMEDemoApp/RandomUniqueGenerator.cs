@@ -24,10 +24,13 @@ namespace TMEDemoApp
         #endregion
         public List<int> GenerateRandomUniqueNumbers(int from, int to, int count)
         {
+            if (from > to)
+                throw new ArgumentOutOfRangeException("from");
+            if (count <= 0)
+                throw new ArgumentOutOfRangeException("count");
             IEnumerable<int> allNumbers = Enumerable.Range(from, (to - from) + 1);
-            var unusedNumbers = allNumbers.Except(_usedNumbersProvider.GetUsedNumbers());
-            var rnd = new Random();
-            List<int> returnedNumbers = unusedNumbers.OrderBy(x => rnd.Next()).Take(count).ToList();
+            var unusedNumbers = allNumbers.Except(_usedNumbersProvider.GetUsedNumbers()).ToList();
+            List<int> returnedNumbers = unusedNumbers.TakeRandom(count);
             return returnedNumbers;
         }
     }
