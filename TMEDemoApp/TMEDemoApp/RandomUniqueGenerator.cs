@@ -20,7 +20,7 @@ namespace TMEDemoApp
         /// <param name="from">Start of range for random numbers.</param>
         /// <param name="to">End of range for random numbers.</param>
         /// <param name="count">Number of random numbers to generate.</param>
-        /// <returns></returns>
+        /// <returns>List of random numbers, each in range [from, to].</returns>
         #endregion
         public List<int> GenerateRandomUniqueNumbers(int from, int to, int count)
         {
