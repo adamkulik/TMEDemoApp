@@ -34,6 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
@@ -41,9 +50,10 @@
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,21 +73,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="IUsedNumbersProvider.cs" />
-    <Compile Include="ListShuffleExtension.cs" />
-    <Compile Include="RandomUniqueGenerator.cs" />
-    <Compile Include="SQLUsedNumbersProvider.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="BusinessLogic\UniqueRandomGenerator\IUniqueGenerator.cs" />
+    <Compile Include="BusinessLogic\UniqueRandomGenerator\RandomUniqueGeneratorFactory.cs" />
+    <Compile Include="BusinessLogic\UsedNumberProviders\IUsedNumbersProvider.cs" />
+    <Compile Include="BusinessLogic\ListShuffleExtension.cs" />
+    <Compile Include="BusinessLogic\UsedNumberProviders\UsedNumbersProviderFactory.cs" />
+    <Compile Include="ViewModels\NumbersViewModel.cs" />
+    <Compile Include="BusinessLogic\UniqueRandomGenerator\RandomUniqueGenerator.cs" />
+    <Compile Include="BusinessLogic\UsedNumberProviders\SQLUsedNumbersProvider.cs" />
+    <Page Include="Views\NumbersView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Views\NumbersView.xaml.cs">
+      <DependentUpon>NumbersView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

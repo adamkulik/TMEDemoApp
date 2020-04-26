@@ -18,8 +18,8 @@ namespace TMEDemoApp.Tests
             usedNumbersMock.Setup(x => x.GetUsedNumbers()).Returns(Enumerable.Range(2,4).ToList());
             List<int> expected = new List<int> { 6, 7, 8, 9 };
 
-            RandomUniqueGenerator generator = new RandomUniqueGenerator(usedNumbersMock.Object);
-            List<int> actual = generator.GenerateRandomUniqueNumbers(2, 9, 4);
+            RandomUniqueGenerator generator = new RandomUniqueGenerator(2,9);
+            List<int> actual = generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,4);
 
             Assert.True(expected.OrderBy(x => x).SequenceEqual(actual.OrderBy(x => x)));
         }
@@ -27,9 +27,9 @@ namespace TMEDemoApp.Tests
         public void GenerateRandomUniqueNumbers_ShouldThrowFrom()
         {
             Mock<IUsedNumbersProvider> usedNumbersMock = new Mock<IUsedNumbersProvider>();
-            RandomUniqueGenerator generator = new RandomUniqueGenerator(usedNumbersMock.Object);
+            RandomUniqueGenerator generator;
 
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator.GenerateRandomUniqueNumbers(4, 3, 2));
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator =new RandomUniqueGenerator(4,3));
 
             Assert.Equal("from", exception.ParamName);
         }
@@ -37,9 +37,9 @@ namespace TMEDemoApp.Tests
         public void GenerateRandomUniqueNumbers_ShouldThrowCount()
         {
             Mock<IUsedNumbersProvider> usedNumbersMock = new Mock<IUsedNumbersProvider>();
-            RandomUniqueGenerator generator = new RandomUniqueGenerator(usedNumbersMock.Object);
+            RandomUniqueGenerator generator = new RandomUniqueGenerator(3,5);
 
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator.GenerateRandomUniqueNumbers(3, 5, -1));
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,-1));
 
             Assert.Equal("count", exception.ParamName);
 

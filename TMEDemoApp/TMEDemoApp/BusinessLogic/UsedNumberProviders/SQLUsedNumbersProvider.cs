@@ -59,7 +59,6 @@ namespace TMEDemoApp
 
         public void SaveUsedNumbers(List<int> usedNumbers)
         {
-            List<int> returnList = new List<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -78,6 +77,7 @@ namespace TMEDemoApp
                 }
                 connection.Close();
             }
+            _usedNumbers.AddRange(usedNumbers);
         }
    }
 }

@@ -15,13 +15,13 @@ namespace TMEDemoApp.Tests
         {
             List<int> expected = new List<int> { 1 };
 
-            SQLUsedNumbersProvider provider = new SQLUsedNumbersProvider(@"HAMSTA-PC\SQLEXPRESS", "TMEDemoDB", "usedNumbers");
+            SQLUsedNumbersProvider provider = new SQLUsedNumbersProvider(@"HAMSTA-PC\SQLEXPRESS", "TMEDemoDB", "usedNumbersTest");
 
             List<int> actual = provider.GetUsedNumbers();
             Assert.Equal(expected, actual);
         }
 
-        [Fact()]
+        /*[Fact()]
         public void SaveUsedNumbersTest()
         {
             List<int> expected = new List<int> { 1, 2, 3, 4 };
@@ -36,6 +36,6 @@ namespace TMEDemoApp.Tests
             Assert.Equal(expected, actual);
 
             
-        }
+        }*/
     }
 }

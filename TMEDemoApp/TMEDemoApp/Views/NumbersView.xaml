@@ -1,0 +1,24 @@
+﻿<Controls:MetroWindow x:Class="TMEDemoApp.Views.NumbersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:TMEDemoApp.Views"
+        mc:Ignorable="d"
+        Title="NumbersView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <Grid HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="250">
+                <TextBox Text="{Binding Path=RandomNumbersCount, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
+                <Label Content="Count of random numbers" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Used numbers percentage" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+                <ProgressBar x:Name="RandomNumbersUsedPercentage" HorizontalAlignment="Left" Height="50" Margin="10,103,0,0" VerticalAlignment="Top" Width="230"/>
+                <Button x:Name="GenerateRandomNumbers" Content="DRAW" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="75"/>
+                <TextBlock HorizontalAlignment="Left" Margin="114,118,0,0" TextWrapping="Wrap" Text="{Binding Path=RandomNumbersUsedPercentage, Mode=OneWay}" VerticalAlignment="Top"/>
+            </Grid>
+            <TextBox Text="{Binding Path=RandomNumbers, Mode=OneWay}" HorizontalAlignment="Left" Height="400" Margin="310,10,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" Width="474"/>
+
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
