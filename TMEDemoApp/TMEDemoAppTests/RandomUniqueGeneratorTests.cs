@@ -15,11 +15,11 @@ namespace TMEDemoApp.Tests
         public void GenerateRandomUniqueNumbersTest()
         {
             Mock<IUsedNumbersProvider> usedNumbersMock = new Mock<IUsedNumbersProvider>();
-            usedNumbersMock.Setup(x => x.GetUsedNumbers()).Returns(Enumerable.Range(2,4).ToList());
+            usedNumbersMock.Setup(x => x.GetUsedNumbers(false)).Returns(Enumerable.Range(2,4).ToList());
             List<int> expected = new List<int> { 6, 7, 8, 9 };
 
             RandomUniqueGenerator generator = new RandomUniqueGenerator(2,9);
-            List<int> actual = generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,4);
+            List<int> actual = generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,4,false);
 
             Assert.True(expected.OrderBy(x => x).SequenceEqual(actual.OrderBy(x => x)));
         }
@@ -39,7 +39,7 @@ namespace TMEDemoApp.Tests
             Mock<IUsedNumbersProvider> usedNumbersMock = new Mock<IUsedNumbersProvider>();
             RandomUniqueGenerator generator = new RandomUniqueGenerator(3,5);
 
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,-1));
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,-1,true));
 
             Assert.Equal("count", exception.ParamName);
 

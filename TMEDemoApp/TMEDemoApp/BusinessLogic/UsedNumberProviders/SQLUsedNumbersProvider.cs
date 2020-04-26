@@ -15,6 +15,7 @@ namespace TMEDemoApp
         private string _tableName;
         private string connectionString;
         private List<int> _usedNumbers;
+        private List<int> _cachedNumbers;
         public int UsedNumbersCount
         {
             get
@@ -32,11 +33,14 @@ namespace TMEDemoApp
                         + @";Database=" + _dbName
                         + ";Integrated Security = true;";
             GetUsedNumbers();
+            _cachedNumbers = new List<int>();
              
         }
 
-        public List<int> GetUsedNumbers()
+        public List<int> GetUsedNumbers(bool cachedVersion = false)
         {
+            if (cachedVersion)
+                return _usedNumbers;
             List<int> returnList = new List<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -57,7 +61,18 @@ namespace TMEDemoApp
             return returnList;
         }
 
-        public void SaveUsedNumbers(List<int> usedNumbers)
+        public void SaveUsedNumbers(List<int> usedNumbers, bool justCache = false)
+        {
+            if (!justCache)
+            {
+                SaveToDb(usedNumbers);
+            }
+            _usedNumbers.AddRange(usedNumbers);
+            if(justCache)
+            _cachedNumbers.AddRange(usedNumbers);
+        }
+
+        private void SaveToDb(List<int> usedNumbers)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -77,7 +92,13 @@ namespace TMEDemoApp
                 }
                 connection.Close();
             }
-            _usedNumbers.AddRange(usedNumbers);
+        }
+
+        public void SyncCache()
+        {
+            SaveToDb(_cachedNumbers);
+            _cachedNumbers = new List<int>();
+
         }
    }
 }

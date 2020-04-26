@@ -16,7 +16,7 @@ namespace TMEDemoApp.ViewModels
         private IUniqueGenerator generator;
         private IUsedNumbersProvider usedNumbersProvider;
         private int _generateSteps = 5;
-        private double _progressBar = 2;
+        private double _progressBar;
         public NumbersViewModel()
         {
             string dbName = ConfigurationManager.AppSettings["dbName"];
@@ -88,13 +88,14 @@ namespace TMEDemoApp.ViewModels
 
                     if (numbersLeft < step)
                         step = numbersLeft;
-                    generatedList.AddRange(generator.GenerateRandomUniqueNumbers(usedNumbersProvider, step));
+                    generatedList.AddRange(generator.GenerateRandomUniqueNumbers(usedNumbersProvider, step,true));
                     ProgressBar = ((double)i / (double)iterations) * 100;
                     numbersLeft -= step;
                 }
             });
             ProgressBar = 100;
             RandomNumbersList = generatedList;
+            usedNumbersProvider.SyncCache();
             RandomNumbersUsed = usedNumbersProvider.UsedNumbersCount;
         }
 
