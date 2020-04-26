@@ -8,15 +8,16 @@ namespace TMEDemoApp
 {
     public class RandomUniqueGenerator : IUniqueGenerator
     {
-        private double _smallPercentageOffset = 0.07;
+        private double _smallPercentageOffset;
         public int From { get; set; }
         public int To { get; set; }
-        public RandomUniqueGenerator(int from, int to)
+        public RandomUniqueGenerator(int from, int to, double smallPercentageOffset = 0.05)
         {
             if (from > to)
                 throw new ArgumentOutOfRangeException("from");
             From = from;
             To = to;
+            _smallPercentageOffset = smallPercentageOffset;
         }
 
 
