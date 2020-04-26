@@ -15,7 +15,7 @@ namespace TMEDemoApp.ViewModels
         private List<int> _randomNumbers = new List<int>();
         private IUniqueGenerator generator;
         private IUsedNumbersProvider usedNumbersProvider;
-        private int _generateSteps = 5;
+        private int _generateSteps = 10;
         private double _progressBar;
         public NumbersViewModel()
         {
@@ -79,9 +79,11 @@ namespace TMEDemoApp.ViewModels
          
             if (RandomNumbersCount == 0) return;
             int iterations = _generateSteps;
+            if (iterations > RandomNumbersCount)
+                iterations = RandomNumbersCount;
             int numbersLeft = RandomNumbersCount;
             List<int> generatedList = new List<int>();
-            int step = RandomNumbersCount / _generateSteps;
+            int step = RandomNumbersCount / iterations;
             await Task.Run(() =>
             {
                 for (int i = 0; i < iterations; i++)

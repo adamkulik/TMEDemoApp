@@ -6,6 +6,6 @@ namespace TMEDemoApp
     {
         int From { get; set; }
         int To { get; set; }
-        List<int> GenerateRandomUniqueNumbers(IUsedNumbersProvider usedNumbersProvider, int count);
+        HashSet<int> GenerateRandomUniqueNumbers(IUsedNumbersProvider usedNumbersProvider, int count);
     }
 }

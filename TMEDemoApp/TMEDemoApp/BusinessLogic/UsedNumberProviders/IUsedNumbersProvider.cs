@@ -4,10 +4,10 @@ namespace TMEDemoApp
 {
     public interface IUsedNumbersProvider
     {
-        List<int> GetUsedNumbers();
+        HashSet<int> GetUsedNumbers();
         bool CachedMode { get; set; }
         int UsedNumbersCount { get; }
-        void SaveUsedNumbers(List<int> usedNumbers);
+        void SaveUsedNumbers(IEnumerable<int> usedNumbers);
         void SyncCache();
     }
 }

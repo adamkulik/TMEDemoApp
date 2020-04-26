@@ -14,8 +14,8 @@ namespace TMEDemoApp
         private string _dbName;
         private string _tableName;
         private string connectionString;
-        private List<int> _usedNumbers;
-        private List<int> _cachedNumbers;
+        private HashSet<int> _usedNumbers;
+        private HashSet<int> _cachedNumbers;
         public int UsedNumbersCount
         {
             get
@@ -35,15 +35,15 @@ namespace TMEDemoApp
                         + @";Database=" + _dbName
                         + ";Integrated Security = true;";
             GetUsedNumbers();
-            _cachedNumbers = new List<int>();
+            _cachedNumbers = new HashSet<int>();
              
         }
 
-        public List<int> GetUsedNumbers()
+        public HashSet<int> GetUsedNumbers()
         {
             if (CachedMode)
                 return _usedNumbers;
-            List<int> returnList = new List<int>();
+            HashSet<int> returnList = new HashSet<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -63,18 +63,18 @@ namespace TMEDemoApp
             return returnList;
         }
 
-        public void SaveUsedNumbers(List<int> usedNumbers)
+        public void SaveUsedNumbers(IEnumerable<int> usedNumbers)
         {
             if (!CachedMode)
             {
                 SaveToDb(usedNumbers);
             }
-            _usedNumbers.AddRange(usedNumbers);
+            _usedNumbers.UnionWith(usedNumbers);
             if(CachedMode)
-            _cachedNumbers.AddRange(usedNumbers);
+            _cachedNumbers.UnionWith(usedNumbers);
         }
 
-        private void SaveToDb(List<int> usedNumbers)
+        private void SaveToDb(IEnumerable<int> usedNumbers)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -82,9 +82,10 @@ namespace TMEDemoApp
                 var table = new DataTable();
                 table.Columns.Add("Value", typeof(int));
 
-                for (var i = 0; i < usedNumbers.Count; i++)
+                
+                foreach(int number in usedNumbers)
                 {
-                    table.Rows.Add(usedNumbers[i]);
+                    table.Rows.Add(number);
                 }
 
                 using (var bulk = new SqlBulkCopy(connection))
@@ -99,7 +100,7 @@ namespace TMEDemoApp
         public void SyncCache()
         {
             SaveToDb(_cachedNumbers);
-            _cachedNumbers = new List<int>();
+            _cachedNumbers = new HashSet<int>();
 
         }
    }

@@ -13,11 +13,11 @@ namespace TMEDemoApp.Tests
         [Fact()]
         public void GetUsedNumbersTest()
         {
-            List<int> expected = new List<int> { 1 };
+            HashSet<int> expected = new HashSet<int> { 1 };
 
             SQLUsedNumbersProvider provider = new SQLUsedNumbersProvider(@"HAMSTA-PC\SQLEXPRESS", "TMEDemoDB", "usedNumbersTest");
 
-            List<int> actual = provider.GetUsedNumbers();
+            HashSet<int> actual = provider.GetUsedNumbers();
             Assert.Equal(expected, actual);
         }
 

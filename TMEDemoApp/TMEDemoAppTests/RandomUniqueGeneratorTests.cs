@@ -15,11 +15,11 @@ namespace TMEDemoApp.Tests
         public void GenerateRandomUniqueNumbersTest()
         {
             Mock<IUsedNumbersProvider> usedNumbersMock = new Mock<IUsedNumbersProvider>();
-            usedNumbersMock.Setup(x => x.GetUsedNumbers()).Returns(Enumerable.Range(2,4).ToList());
-            List<int> expected = new List<int> { 6, 7, 8, 9 };
+            usedNumbersMock.Setup(x => x.GetUsedNumbers()).Returns(new HashSet<int> { 2, 3, 4, 5});
+            HashSet<int> expected = new HashSet<int> { 6, 7, 8, 9 };
 
             RandomUniqueGenerator generator = new RandomUniqueGenerator(2,9);
-            List<int> actual = generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,4);
+            HashSet<int> actual = generator.GenerateRandomUniqueNumbers(usedNumbersMock.Object,4);
 
             Assert.True(expected.OrderBy(x => x).SequenceEqual(actual.OrderBy(x => x)));
         }
