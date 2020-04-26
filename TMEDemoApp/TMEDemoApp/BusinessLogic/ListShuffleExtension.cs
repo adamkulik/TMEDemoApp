@@ -20,7 +20,7 @@ namespace TMEDemoApp
         public static List<T> TakeRandom<T>(this List<T> list, int count)
         {
             if (list.Count < count)
-                throw new ArgumentOutOfRangeException("count");
+                count = list.Count;
             if (list.Count == count)
                 return list;
 

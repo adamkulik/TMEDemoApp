@@ -31,7 +31,6 @@ namespace TMEDemoApp.ViewModels
             {
                 _randomNumbers = value;
                 NotifyOfPropertyChange(() => RandomNumbers);
-
             }
         }
         public int RandomNumbersUsed
@@ -45,7 +44,6 @@ namespace TMEDemoApp.ViewModels
                 NotifyOfPropertyChange(() => RandomNumbersUsed);
                 NotifyOfPropertyChange(() => RandomNumbersUsedPercentage);
             }
-            
         }
         public int RandomNumbersUsedPercentage
         {
@@ -55,7 +53,6 @@ namespace TMEDemoApp.ViewModels
             }
         }
         public int RandomNumbersCount { get; set; }
-
         public void GenerateRandomNumbers()
         {
             if (RandomNumbersCount == 0) return;
