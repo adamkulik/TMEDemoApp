@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 namespace TMEDemoApp
 {
    public class SQLUsedNumbersProvider : IUsedNumbersProvider
-    {
+   {
         private string _serverName;
         private string _dbName;
+        private string _tableName;
+        private string connectionString;
         private List<int> _usedNumbers;
         public int UsedNumbersCount
         {
@@ -20,25 +22,26 @@ namespace TMEDemoApp
                 return _usedNumbers.Count;
             }
         }
-        public SQLUsedNumbersProvider(string newServerName, string newDbName)
+
+        public SQLUsedNumbersProvider(string newServerName, string newDbName, string newTableName)
         {
             _serverName = newServerName;
             _dbName = newDbName;
+            _tableName = newTableName;
+            connectionString = @"Server=" + _serverName //appending a string generally should be done using StringBuilder, but for small cases + is faster
+                        + @";Database=" + _dbName
+                        + ";Integrated Security = true;";
             GetUsedNumbers();
              
         }
-       public List<int> GetUsedNumbers()
+
+        public List<int> GetUsedNumbers()
         {
-            string connectionString = @"Server=" //appending a string generally should be done using StringBuilder, but for small cases + is faster
-                                    + _serverName 
-                                    + @";Database=" 
-                                    + _dbName 
-                                    + ";Integrated Security = true;";
             List<int> returnList = new List<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM usedNumbers",connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM " + _tableName ,connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -56,14 +59,10 @@ namespace TMEDemoApp
 
         public void SaveUsedNumbers(List<int> usedNumbers)
         {
-            string connectionString = @"Server=" //appending a string generally should be done using StringBuilder, but for small cases + is faster
-                                     + _serverName
-                                     + @";Database="
-                                     + _dbName
-                                     + ";Integrated Security = true;";
             List<int> returnList = new List<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 var table = new DataTable();
                 table.Columns.Add("Value", typeof(int));
 
@@ -74,9 +73,11 @@ namespace TMEDemoApp
 
                 using (var bulk = new SqlBulkCopy(connection))
                 {
-                    bulk.DestinationTableName = "usedNumbers"; //TODO: Refactor table name
+                    bulk.DestinationTableName = _tableName;
                     bulk.WriteToServer(table);
                 }
+                connection.Close();
             }
-    }
+        }
+   }
 }

@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomUniqueGeneratorTests.cs" />
+    <Compile Include="SQLUsedNumbersProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
