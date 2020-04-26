@@ -23,6 +23,8 @@ namespace TMEDemoApp
                 return _usedNumbers.Count;
             }
         }
+        public bool CachedMode
+        { get; set; }
 
         public SQLUsedNumbersProvider(string newServerName, string newDbName, string newTableName)
         {
@@ -37,9 +39,9 @@ namespace TMEDemoApp
              
         }
 
-        public List<int> GetUsedNumbers(bool cachedVersion = false)
+        public List<int> GetUsedNumbers()
         {
-            if (cachedVersion)
+            if (CachedMode)
                 return _usedNumbers;
             List<int> returnList = new List<int>();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -61,14 +63,14 @@ namespace TMEDemoApp
             return returnList;
         }
 
-        public void SaveUsedNumbers(List<int> usedNumbers, bool justCache = false)
+        public void SaveUsedNumbers(List<int> usedNumbers)
         {
-            if (!justCache)
+            if (!CachedMode)
             {
                 SaveToDb(usedNumbers);
             }
             _usedNumbers.AddRange(usedNumbers);
-            if(justCache)
+            if(CachedMode)
             _cachedNumbers.AddRange(usedNumbers);
         }
 

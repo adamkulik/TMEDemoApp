@@ -29,15 +29,15 @@ namespace TMEDemoApp
         /// <param name="shouldSave">If set to false</param>
         /// <returns>List of random numbers, each in range [from, to].</returns>
         #endregion
-        public List<int> GenerateRandomUniqueNumbers(IUsedNumbersProvider usedNumbersProvider, int count, bool cached)
+        public List<int> GenerateRandomUniqueNumbers(IUsedNumbersProvider usedNumbersProvider, int count)
         {
             if (count <= 0)
                 throw new ArgumentOutOfRangeException("count");
 
             IEnumerable<int> allNumbers = Enumerable.Range(From, (To - From) + 1);
-            var unusedNumbers = allNumbers.Except(usedNumbersProvider.GetUsedNumbers(cached)).ToList();
+            var unusedNumbers = allNumbers.Except(usedNumbersProvider.GetUsedNumbers()).ToList();
             List<int> returnedNumbers = unusedNumbers.TakeRandom(count);
-            usedNumbersProvider.SaveUsedNumbers(returnedNumbers,cached);
+            usedNumbersProvider.SaveUsedNumbers(returnedNumbers);
             return returnedNumbers;
         }
     }

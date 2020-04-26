@@ -24,6 +24,7 @@ namespace TMEDemoApp.ViewModels
             string tableName = ConfigurationManager.AppSettings["tableName"];
             usedNumbersProvider = UsedNumbersProviderFactory.GetSQLUsedNumbersProvider(serverName, dbName, tableName);
             generator = RandomUniqueGeneratorFactory.GetRandomUniqueGeneratorSQL(1000000,9999999);
+            usedNumbersProvider.CachedMode = true;
         }
         public string RandomNumbers
         {
@@ -85,10 +86,9 @@ namespace TMEDemoApp.ViewModels
             {
                 for (int i = 0; i < iterations; i++)
                 {
-
                     if (numbersLeft < step)
                         step = numbersLeft;
-                    generatedList.AddRange(generator.GenerateRandomUniqueNumbers(usedNumbersProvider, step,true));
+                    generatedList.AddRange(generator.GenerateRandomUniqueNumbers(usedNumbersProvider, step));
                     ProgressBar = ((double)i / (double)iterations) * 100;
                     numbersLeft -= step;
                 }
