@@ -16,7 +16,7 @@ namespace TMEDemoApp.ViewModels
         private ObservableCollection<int> _randomNumbers = new ObservableCollection<int>();
         private IUniqueGenerator generator;
         private IUsedNumbersProvider usedNumbersProvider;
-        private int _generateSteps = 100;
+        private int _generateSteps = 10;
         private double _progressBar;
         private bool _isButtonEnabled = true;
         public NumbersViewModel()
