@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,12 @@ namespace TMEDemoApp.ViewModels
 {
     public class NumbersViewModel : Screen
     {
-        private List<int> _randomNumbers = new List<int>();
+        private ObservableCollection<int> _randomNumbers = new ObservableCollection<int>();
         private IUniqueGenerator generator;
         private IUsedNumbersProvider usedNumbersProvider;
-        private int _generateSteps = 10;
+        private int _generateSteps = 100;
         private double _progressBar;
+        private bool _isButtonEnabled = true;
         public NumbersViewModel()
         {
             string dbName = ConfigurationManager.AppSettings["dbName"];
@@ -30,12 +32,13 @@ namespace TMEDemoApp.ViewModels
         {
             get { return String.Join(",",_randomNumbers); }
         }
-        public List<int> RandomNumbersList
+        public ObservableCollection<int> RandomNumbersList
         {
             set
             {
                 _randomNumbers = value;
                 NotifyOfPropertyChange(() => RandomNumbers);
+                NotifyOfPropertyChange(() => RandomNumbersList);
             }
             get
             {
@@ -74,9 +77,21 @@ namespace TMEDemoApp.ViewModels
                 NotifyOfPropertyChange(() => ProgressBar);
             }
         }
+        public bool IsButtonEnabled
+        {
+            get
+            {
+                return _isButtonEnabled;
+            }
+            set
+            {
+                _isButtonEnabled = value;
+                NotifyOfPropertyChange(() => IsButtonEnabled);
+            }
+        }
         async public void GenerateRandomNumbers()
         {
-         
+            IsButtonEnabled = false;
             if (RandomNumbersCount == 0) return;
             int iterations = _generateSteps;
             if (iterations > RandomNumbersCount)
@@ -96,9 +111,10 @@ namespace TMEDemoApp.ViewModels
                 }
             });
             ProgressBar = 100;
-            RandomNumbersList = generatedList;
+            RandomNumbersList = new ObservableCollection<int>(generatedList);
             usedNumbersProvider.SyncCache();
             RandomNumbersUsed = usedNumbersProvider.UsedNumbersCount;
+            IsButtonEnabled = true;
         }
 
 

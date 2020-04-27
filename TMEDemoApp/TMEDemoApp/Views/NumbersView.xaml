@@ -14,7 +14,7 @@
                 <Label Content="Count of random numbers" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                 <Label Content="Used numbers percentage" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
                 <ProgressBar x:Name="RandomNumbersUsedPercentage" HorizontalAlignment="Left" Height="50" Margin="10,103,0,0" VerticalAlignment="Top" Width="230"/>
-                <Button x:Name="GenerateRandomNumbers" Content="DRAW" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="GenerateRandomNumbers" Content="DRAW" IsEnabled="{Binding Path=IsButtonEnabled, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="75"/>
                 <TextBlock HorizontalAlignment="Left" Margin="114,118,0,0" TextWrapping="Wrap" Text="{Binding Path=RandomNumbersUsedPercentage, Mode=OneWay}" VerticalAlignment="Top"/>
                 <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="39" Margin="10,203,0,0" VerticalAlignment="Top" Width="226"/>
                 <Label Content="Generation progress" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
